@@ -1,0 +1,43 @@
+#{
+
+/* C stuff here.
+ * They will be put in the top of the output file.
+ */
+
+#include <stdlib.h>
+
+#}
+
+HELPNODE "SAMPLE help\nUsage : sample [options] file_name"
+
+DATA verbose AS INT
+OPTION (v, verbose) { $verbose = 1 } "verbose mode on"
+OPTION (q, quiet) { $verbose = -1 } "quiet mode on"
+
+#int n;
+#char m;
+OPTION (num) INT "integer1" OPTIONAL CHAR "[integer2]" { if(@1 == 1) $n = $1; $m = $2 } 
+			"specifies the number of " "totoros"
+
+OPTION (N, null) { printf("Option null\n"); } "NULL option"
+
+OPTION (single) { printf("Single\n"); } "SINGLE option"
+
+DATA size AS INT
+DATA input AS *STR
+OPTION (f, file) OPTIONAL *STR "file1 file2...fileN" { $input = $1; $size = @1 } "specifies the output files"
+
+OPTION (h, help) { gaa_help(); exit(0); } "shows this help text"
+
+OPTION (k, k_fact) FLOAT {  printf("k_fact : %f\n", $1); } "Specifies"
+	" k factor"
+
+DATA file AS STR
+DATA nf AS INT
+REST OPTIONAL STR *INT { if(@1 == 1) $file = $1; $nf = @2 }
+
+INCOMP vq
+OBLIGAT vq
+
+INIT { $m = 0; $n = 0; $verbose = 0; $file = NULL; $size = 0 }
+

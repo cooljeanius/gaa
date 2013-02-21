@@ -1,0 +1,34 @@
+Version 1.6.6 (July 20 2004)
+- Added the --prefix option to prefix generated symbols,
+  and also made the internal functions in gaa.skel static.
+
+Version 1.6.5 (February 13 2004)
+- Corrected bug in gaa.skel.
+
+Version 1.6.4 (December 17 2003)
+- Corrected a bug in gaa.skel which made it fail when
+  a newline was not present in the config file.
+- Documentation now goes to $datadir/doc/gaa.
+
+Version 1.6.3 (November 06 2003)
+- Corrected a bug in gaa.skel which made the integer
+  scanning to fail in win32.
+
+Version 1.6.2 (June 03 2002)
+- Corrected buffer overrun in gaa.skel
+
+Version 1.6.1 (May 25 2002)
+- Added support for options which contain the '-' character such as
+  "--hello-there"
+- Corrected the GETTEXT_STRINGS option
+
+Version 1.6.0 (March 20 2002)
+- Corrected bug in parser (now works with bison >1.28)
+- Added support for files that contain carriage return
+- Now uses standard C library functions for file IO
+- Default output file is file_gaa.c and file_gaa.h 
+  (if the gaa source file is called file.gaa)
+- Added new C declarations section
+- Better error reporting
+- Added GETTEXT_STRINGS instruction - for use with gettext
+Thu Feb 21 16:29:09 EST 2013

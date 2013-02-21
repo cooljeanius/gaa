@@ -1,0 +1,49 @@
+#{
+
+/* 
+ * Copyright 1998, 1999 Joran Maille
+ * Copyright 2002 Nikos Mavroyanopoulos
+ *
+ */
+
+#include "gaa.h"
+#include "../config.h"
+
+#}
+
+DATA input AS STR
+DATA output AS STR
+DATA header AS STR
+DATA prefix AS STR
+DATA skel AS STR
+DATA win32 AS INT
+
+INIT { $input = NULL; $output = NULL; $header = NULL; $prefix = NULL;
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(WINDOWS)
+        $skel = NULL;
+#else
+	$skel = SKEL_DIR "/gaa.skel";
+#endif 
+$win32 = 0; }
+
+HELPNODE "GAA version " %VERSION% 
+HELPNODE "Copyright (C) 1998 - 1999 Joran Maille <joran@writeme.com>\n"
+	"Copyright (C) 2002 Nikos Mavroyanopoulos <nmav@gnutls.org>"
+HELPNODE ""
+HELPNODE "Usage: gaa [options] input-file.gaa"
+
+OPTION (o, output) STR "file" { $output = $1 } "specifies output file"
+OPTION (i, header) STR "file" { $header = $1 } "specifies header file"
+OPTION (p, prefix) STR "PFX" { $prefix = $1 } "Prefixes all symbols with that prefix."
+OPTION (h, help) { gaa_help(); exit(0);  } "shows this help text"
+OPTION (v, version) { gaa_version(); exit(0);  } "shows gaa's version"
+OPTION (s, skel) STR "skeleton" { $skel = $1 } "specifies an alternative skeleton file"
+/*
+HELPNODE ""
+OPTION (w, win32) { $win32 = 1 } "Uses win32 '/' options"
+OPTION (W, nowin32) { $win32 = -1 } "Forbids win32 '/' options"
+*/
+
+HELPNODE "Please report any bug to <nmav@gnutls.org>"
+
+REST STR { $input = $1 }

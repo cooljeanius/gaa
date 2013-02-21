@@ -1,0 +1,51 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.50)
+AC_INIT
+AM_CONFIG_HEADER(config.h)
+
+AC_PREFIX_DEFAULT(/usr/local)
+
+gaadatadir=$datadir/gaa
+gaadocdir=$datadir/doc/gaa
+gaasampledir=$datadir/gaa/sample
+
+AC_SUBST(gaadatadir)
+AC_SUBST(gaadocdir)
+AC_SUBST(gaasampledir)
+
+AM_INIT_AUTOMAKE(gaa, 1.6.6)
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+
+dnl Checks for libraries.
+
+if test $ac_cv_c_compiler_gnu != no; then
+  CFLAGS="${CFLAGS} -ggdb3 -Wall -Wpointer-arith"
+fi
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+
+dnl We depend on BISON (other yacc's may not do)
+AC_CHECK_PROGS([BISON], [bison])
+if test -z "$BISON"; then
+  YACC=:
+else
+  YACC="$BISON -y"
+fi
+AC_SUBST(YACC)
+
+AM_PROG_LEX
+
+dnl Checks for library functions.
+AC_FUNC_ALLOCA
+
+AC_OUTPUT(source/Makefile Makefile doc/Makefile source/skel/Makefile sample/Makefile)
+

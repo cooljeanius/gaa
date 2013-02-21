@@ -1,0 +1,4 @@
+SUBDIRS = source doc sample
+EXTRA_DIST = TODO
+
+ACLOCAL_AMFLAGS = -I m4

@@ -1,0 +1,19 @@
+helpnode "SAMPLE help\nUsage : sample [options] file_name"
+
+#int verbose;
+option (v, verbose) { $verbose = 1 } "verbose mode on"
+
+#int n;
+option (n, num) INT "integer" { $n = $1 } 
+	"specifies the number of totoros.\n Tata titi tutu toto lulu popi mimi mumu momo"
+
+#int size;
+#char **input;
+option (f, file) *STR "file1 file2...fileN" { $input = $1; $size = @1 } "specifies the output files"
+
+option (h, help) { gaa_help(); exit(0); } "shows this help text"
+
+#char *file;
+rest optional STR { $file = $1 }
+
+init { $n = 0; $verbose = 0; $file = NULL; $size = 0 }

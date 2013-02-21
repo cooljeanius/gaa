@@ -1,0 +1,10 @@
+*DS_Store*
+*.o
+*~
+*.cache
+*.log
+*/*.deps/*.*Po
+*.status
+config.h
+libtool
+*stamp-h*
