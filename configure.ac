@@ -24,6 +24,7 @@ AM_SET_LEADING_DOT
 AC_EXEEXT
 
 dnl Checks for programs.
+AC_PROG_AWK
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CPP
@@ -31,8 +32,12 @@ AC_PROG_CXX
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_INSTALL
 AC_PROG_LN_S
+AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 AC_PROG_RANLIB
+
+dnl AX_* macros require the autoconf-archive package
+AX_CHECK_GNU_MAKE
 
 dnl Checks for libraries.
 AC_CHECK_LIB([c], [getline])
@@ -67,7 +72,6 @@ AS_HELP_STRING([--with-bison-bin=PATH], [specify where to find the bison program
  GDB_AC_DEFINE_RELOCATABLE([BISON_BIN], [bison], [${bison_bin}])
 ])
 
-
 AM_PROG_LEX
 
 dnl Checks for library functions.
@@ -75,7 +79,6 @@ AC_FUNC_ALLOCA
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([getline memset strdup strncasecmp strstr])
-
 
 AC_CONFIG_FILES([source/Makefile Makefile doc/Makefile source/skel/Makefile sample/Makefile])
 

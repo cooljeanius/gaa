@@ -6,6 +6,7 @@
 */*.deps/*.*Po
 *.status
 config.h
+confdefs.h
 libtool
 *stamp-h*
 source/gaa
