@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>GAA declarations</TITLE>
+<META NAME="description" CONTENT="GAA declarations">
+<META NAME="keywords" CONTENT="ref">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ref.css">
+
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="node1.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html52"
+  HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/opt/local/share/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html50"
+  HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/opt/local/share/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html44"
+  HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/opt/local/share/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html53"
+  HREF="node5.html">Configuration files</A>
+<B> Up:</B> <A NAME="tex2html51"
+  HREF="node1.html">Reference</A>
+<B> Previous:</B> <A NAME="tex2html45"
+  HREF="node3.html">GAA file structure</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00130000000000000000">
+GAA declarations</A>
+</H1>
+ 
+<UL>
+<LI><B>DATA data-name AS gaa-arg-type</B>
+   Data declaration for the gaainfo structure.
+   <U>Example :</U>DATA a AS CHAR  'a' can contain a character
+   DATA textList AS *STR  'textList' can contain a list of strings
+   (C type : char**)
+</LI>
+<LI><B>#C-variable-declaration</B> Data declaration for the gaainfo structure.
+   <U>Example</U> :
+   <I>#char a;</I>
+</LI>
+<LI><B>defitem ARGTYPE function-name #C-ArgType</B>  Declaration of an user-defined named <I>ARGTYPE</I>.
+    The <I>function-name</I> is the name of the function which will be called
+    by gaa() to check if the argument is an <I>ARGTYPE</I> and to get its value.
+    C-ArgType is the C type of <I>ARGTYPE</I>. The <I>function-name</I> function
+   must declared (in the C-Declaration part) as follows :
+    <I>C-ArgType function-name</I>(char*) { }
+    In this function, you must use the <B>GAAERROR</B>
+    macro when the argument is incorrect.
+    <U>Example</U> :
+    defitem HEX findhex #int
+    ##
+    int findhex(char*) {...}
+</LI>
+<LI><B>helpnode "help text"</B> Writes a line in the help.
+</LI>
+<LI><B>incomp shortnamelist</B> <I>shortnamelist</I> is a list of options. This
+    instruction makes the options in the list incompatibles.
+    <U>Example</U> :
+    incomp vn  the option verbose and num (of the sample)
+    become incompatible
+</LI>
+<LI><B>init { action }</B>  Defines the intialization action. This action will
+    be the first executed.
+</LI>
+<LI><B>obligat shortnamelist</B> <I>shortnamelist</I> is a list of options. This
+    instruction forces the user to give one option in of the list.
+    <U>Example</U> :
+    obligat vn  the user must give the option verbose
+    or/and the option num
+</LI>
+<LI><B>option (shortname, longname) <IMG
+ WIDTH="17" HEIGHT="11" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$&lt;$">ARG_DECL_LIST<IMG
+ WIDTH="14" HEIGHT="22" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.png"
+ ALT="$&gt;$"> {
+    action } "option help"</B>
+    An ARG_DECL_LIST is a list of argument declarations
+    (surprising, isn't it ?)
+     ARG_DECL syntax : ARGTYPE
+      or ARGTYPE "argument description"
+     <I><U>Note</U></I> : shortname must be a single character
+     When gaa() finds an argument begining with '-',
+     it considers that this argument is an option. If an option with the same
+     name has been declared, there are two possibilities :
+      
+<OL>
+<LI>the option doesn't need any argument
+</LI>
+<LI>gaa() executes the assiociated <I>action. </I>In
+          this action, you can refer to a data contained in gaaval : you only have
+          to put a '$' character before the name of the variable.
+          <I><U>example</U></I> : if you have declared 'DATA pom AS CHAR' '#char
+          pom', to refer to 'pom' in an action, you must write '$pom'; otherwise,
+          if you write 'pom', it will be considered as a general variable named 'pom'.
+</LI>
+<LI>the option requires one or more argument(s)  gaa() checks if the next argument has the right
+	type, and calculates its value. Then, it executes the action associated
+	with the option in the same way as if there was no argument. In the action,
+	'$n' represents the value of the nth argument.
+     
+</LI>
+</OL>
+ bf Note:
+predefined ARGTYPEs exist (cf. Quick Reference)
+the type of the argument value depends on the choosen ARGTYPE. For instance,
+type for 'INT' is 'int' <B>rest <IMG
+ WIDTH="17" HEIGHT="11" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$&lt;$">ARG_DECL_LIST<IMG
+ WIDTH="14" HEIGHT="22" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.png"
+ ALT="$&gt;$"> { action }</B>  For most programs, the user must provide a filename
+(for instance) without an option. This is supported by GAA with the 'rest'
+instruction.
+ 'rest' represents the argument(s) which remain when
+you remove all the options (with their private argument(s)) from the line
+given by the user.
+ For example, in the command 'tar -xv zorglub.gif
+-f toto.tar kiem.jpg bobby.c', the arguments managed by rest are zorglub.gif,
+kiem.jpg and bobby.c. In this case, if the GAA file specifies 'rest STR
+...', an error will occur, because the program wants <U>one</U> rest
+argument only. If the GAA files specifies 'rest *STR', it's OK, because
+it means that the program needs a list of arguments as rest.
+
+<P>
+<U>Example</U> :
+ rest *STR ...  the rest is a list of name Predefined ARG_TYPEs
+<B>ARG_TYPE</B><B>C-type</B><B>Recognized arguments</B>STRchar*any argumentINTintintegersCHARcharsingle charactersFLOATfloatfloat number
+
+<P>
+bf Important: if in a declaration, you declare *ARG_TYPE,
+the user will have to give a list of ARG_TYPE and not a single ARG_TYPE.
+In the attached action, you can get the number of found arguments with
+the '@n' symbol.
+</LI>
+</UL>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html52"
+  HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/opt/local/share/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html50"
+  HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/opt/local/share/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html44"
+  HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/opt/local/share/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html53"
+  HREF="node5.html">Configuration files</A>
+<B> Up:</B> <A NAME="tex2html51"
+  HREF="node1.html">Reference</A>
+<B> Previous:</B> <A NAME="tex2html45"
+  HREF="node3.html">GAA file structure</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+System Administrator
+2013-02-22
+</ADDRESS>
+</BODY>
+</HTML>

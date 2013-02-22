@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The 'sample.gaa' file</TITLE>
+<META NAME="description" CONTENT="The 'sample.gaa' file">
+<META NAME="keywords" CONTENT="gaa">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="gaa.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html139"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/opt/local/share/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html135"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/opt/local/share/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html129"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/opt/local/share/lib/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html137"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/opt/local/share/lib/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html140"
+  HREF="node9.html">sample.gaa</A>
+<B> Up:</B> <A NAME="tex2html136"
+  HREF="node2.html">Tutorial</A>
+<B> Previous:</B> <A NAME="tex2html130"
+  HREF="node7.html">Description of our sample</A>
+ &nbsp; <B>  <A NAME="tex2html138"
+  HREF="node1.html">Contents</A></B> 
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00260000000000000000">
+The '<I>sample.gaa'</I> file</A>
+</H1>
+GAA generates the help of your programme. You can make him write something
+in the help with the instruction <I>helpnode</I>. So, we begin sample.gaa
+by the line:
+
+<P>
+<PRE>
+helpnode "SAMPLE help\nUsage : sample [options] file_name"
+</PRE>
+
+<P>
+When GAA generates the help, it follows the order in the gaa file.
+So, this line will be the first of the help.
+
+<P>
+Let's declare the sample's options
+
+<UL>
+<LI>Verbose
+</LI>
+</UL>
+
+<P>
+First, we should declare the gaainfo member that will store the state
+of the option, 'verbose'.
+
+<P>
+<PRE>
+#int verbose;
+</PRE>
+then we must declare the option itself
+
+<P>
+<PRE>
+option (v, verbose) { $verbose = 1 } "verbose mode on"
+</PRE>
+
+<P>
+GAA changes '$verbose' into the 'verbose'
+member of gaaval. When GAA returns, gaaval-&gt;verbose will be equal to 1.
+
+<P>
+
+<UL>
+<LI>Num
+</LI>
+</UL>
+
+<P>
+First, we should declare the gaainfo member that will store the number
+specified by the user. Let's name it 'n'.
+
+<P>
+<PRE>
+#int n;
+</PRE>
+
+<P>
+then, the option:
+
+<P>
+<PRE>
+option (n, num) INT "integer" { $n = $1 } "specifies the number of totoros"
+</PRE>
+
+<P>
+
+<UL>
+<LI>File
+</LI>
+</UL>
+
+<P>
+This option needs a list of filenames as argument.
+So we need two datas : the number of files and a list of filenames. For
+that, we have the STR predefined type whose C-type is char*. To have a
+list of STR, the ARG_TYPE must be *STR. The C-type of *STR is of course
+char**
+
+<P>
+<PRE>
+#int size;
+#char **input;
+option (f, file) *STR "file1 file2...fileN" { $input = $1; $size = @1 } "specifies"
+" the output files"
+</PRE>
+
+<P>
+'@1' is transformed by GAA into the number of filename
+given by the user. Note : it's always '@1'
+
+<P>
+
+<UL>
+<LI>Help
+</LI>
+</UL>
+
+<P>
+This option nust show the help and quit. So, let's
+call gaa_help()
+
+<P>
+<PRE>
+option (h, help) { gaa_help(); exit(0); } "shows this help text"
+</PRE>
+Sample must be called with a filename as argument. So
+we must use the 'rest' instruction, and create a data that will store the
+filename.
+
+<P>
+<PRE>
+#char *file;
+rest STR { $file = $1 }
+</PRE>
+
+<P>
+'rest' represents the argument(s) which remain when
+you remove all the options (with their private argument(s)) from the line
+given by the user.
+
+<P>
+For example, in the command 'tar -xv zorglub.gif -f toto.tar kiem.jpg bobby.c', 
+the arguments managed by rest are zorglub.gif,
+kiem.jpg and bobby.c. In this case, if the GAA file specifies 'rest STR
+...', an error will occur, because the program wants <B>one</B> rest
+argument only. If the GAA files specifies 'rest *STR', it's OK, because
+it means that the program needs a list of arguments as rest.
+Each <I>gaaval</I> data must be initialized. To
+do that we use the 'init' instruction
+
+<P>
+<PRE>
+init { $n = 0; $verbose = 0; $file = NULL; $size = 0 }
+</PRE>
+
+<P>
+That's all !
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL>
+<LI><A NAME="tex2html141"
+  HREF="node9.html">sample.gaa</A>
+<LI><A NAME="tex2html142"
+  HREF="node10.html">The 'smain.c' the C program using GAA</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html139"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/opt/local/share/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html135"
+  HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/opt/local/share/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html129"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/opt/local/share/lib/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html137"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="file:/opt/local/share/lib/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html140"
+  HREF="node9.html">sample.gaa</A>
+<B> Up:</B> <A NAME="tex2html136"
+  HREF="node2.html">Tutorial</A>
+<B> Previous:</B> <A NAME="tex2html130"
+  HREF="node7.html">Description of our sample</A>
+ &nbsp; <B>  <A NAME="tex2html138"
+  HREF="node1.html">Contents</A></B> 
+<!--End of Navigation Panel-->
+<ADDRESS>
+System Administrator
+2013-02-22
+</ADDRESS>
+</BODY>
+</HTML>

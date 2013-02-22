@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>How to declare options</TITLE>
+<META NAME="description" CONTENT="How to declare options">
+<META NAME="keywords" CONTENT="tut">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="tut.css">
+
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node1.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html72"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/opt/local/share/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html70"
+  HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/opt/local/share/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html64"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/opt/local/share/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html73"
+  HREF="node6.html">Description of our sample</A>
+<B> Up:</B> <A NAME="tex2html71"
+  HREF="node1.html">Tutorial</A>
+<B> Previous:</B> <A NAME="tex2html65"
+  HREF="node4.html">How to declare the</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00140000000000000000">
+ How to declare options</A>
+</H1>
+Option declaration general syntax:
+
+<P>
+for argless options:
+
+<P>
+<PRE>
+option (short_name, long_name) { action } "option help"
+</PRE>
+
+<P>
+for options with one argument
+
+<P>
+<PRE>
+option (short_name, long_name) ARG_TYPE "arg help" { action } "option help"
+</PRE>
+
+<P>
+<B>Note</B>: short_name must be a single character 
+<BR>
+When gaa() finds an argument begining with '-', it considers that this
+argument is an option. If an option with the same name has been declared,
+there are two possibilities:
+
+<P>
+
+<OL>
+<LI>the option doesn't need any argument
+ gaa() executes the assiociated <I>action</I>. In
+this action, you can refer to a data contained in gaaval : you only have
+to put a '$' character before the name of the variable.
+example : if you have declared '#char pom', to refer
+to 'pom' in an action, you must write '$pom'; otherwise, if you write 'pom',
+it will be considered as a general variable named 'pom'.
+</LI>
+<LI>the option requires an argument
+gaa() checks if the next argument has the right
+type, and calculates its value. Then, it executes the action associated
+with the option in the same way as if there was no argument. In the action,
+'$1' represents the value of the argument.
+
+<P>
+</LI>
+</OL>
+<B>Note</B>:
+
+<UL>
+<LI>predefined ARG_TYPEs exist (cf. Quick Reference)
+
+<P>
+</LI>
+<LI>the type of the argument value depends on the choosen ARG_TYPE. For instance,
+type for 'INT' is 'int'
+</LI>
+</UL>
+
+<P>
+For most programmes, the user must provide a filename
+(for instance) without an option. This is supported by GAA with the 'rest'
+instruction :
+<PRE>
+rest ARG_TYPE { action }
+</PRE>
+
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html72"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="file:/opt/local/share/lib/latex2html/icons/next.png"></A> 
+<A NAME="tex2html70"
+  HREF="node1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="file:/opt/local/share/lib/latex2html/icons/up.png"></A> 
+<A NAME="tex2html64"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="file:/opt/local/share/lib/latex2html/icons/prev.png"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html73"
+  HREF="node6.html">Description of our sample</A>
+<B> Up:</B> <A NAME="tex2html71"
+  HREF="node1.html">Tutorial</A>
+<B> Previous:</B> <A NAME="tex2html65"
+  HREF="node4.html">How to declare the</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+System Administrator
+2013-02-22
+</ADDRESS>
+</BODY>
+</HTML>
