@@ -805,7 +805,7 @@ void copy_file_state(FILE* source, FILE* target, int term)
 /* Returns the number of the line, that the index-th character
  * is placed.
  */
-int gaa_getline(FILE* fd, int index)
+int getline(FILE* fd, int index)
 {
     int tmp, line = 1, i;
     int a = 0;
@@ -830,7 +830,7 @@ int gaa_getline(FILE* fd, int index)
 void copy_line(FILE* fd, int index, FILE* target, char* file, char term)
 {
     int a;
-    fprintf(target, "#line %d \"%s\"\n\t", gaa_getline(fd, index), file);
+    fprintf(target, "#line %d \"%s\"\n\t", getline(fd, index), file);
     fseek(fd, index, SEEK_SET);
     do
     {
@@ -853,7 +853,7 @@ void put_action( FILE* fd, int index, FILE* target, char *opt, int narg, char* f
     int a;
     char *str_cmp;
     int i, flag = 1;
-    fprintf(target, "#line %d \"%s\"\n", gaa_getline(fd, index), file);
+    fprintf(target, "#line %d \"%s\"\n", getline(fd, index), file);
     fprintf(target, "{");
     fseek(fd, index, SEEK_SET);
     if(opt[0] == 0)
@@ -954,7 +954,7 @@ void put_action( FILE* fd, int index, FILE* target, char *opt, int narg, char* f
 void copy_file(FILE* fd, int index, FILE* target, char *file)
 {
     int a, pa = -1;
-    fprintf(target, "#line %d \"%s\"\n", gaa_getline(fd, index), file);
+    fprintf(target, "#line %d \"%s\"\n", getline(fd, index), file);
     fseek(fd, index, SEEK_SET);
     while( (a=fgetc(fd)) != EOF)
     {
