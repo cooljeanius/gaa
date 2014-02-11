@@ -1,0 +1,77 @@
+\input texinfo  @c -*-texinfo-*-
+@c %**start of header (This is for running texinfo on a region.)
+@setfilename gaa.info
+@settitle GAA Argument Analyzer
+@c %**end of header (This is for running texinfo on a region.)
+
+@include version.texi
+
+@ignore
+@ifinfo
+@format
+START-INFO-DIR-ENTRY
+* GAA: (gaa.info).   The GAA Argument Analyzer.
+END-INFO-DIR-ENTRY
+@end format
+@end ifinfo
+@end ignore
+
+@titlepage
+@title The GAA Argument Analyzer
+@subtitle A User's Guide for the GNU GAA Argument Analyzer
+@subtitle Edition @value{VERSION}
+@subtitle @value{UPDATED}
+@author Joran Maille, Nikos Mavroyanopoulos, and Eric Gallager
+@c Include the Distribution inside the titlepage
+@c environment so that headings are turned off.
+@c Headings on and off do not work.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} @value{UPDATED-MONTH} Free Software Foundation, Inc.
+@sp 2
+This is Edition @value{VERSION} of @cite{The GAA Argument Analyzer}, @* for the
+@value{VERSION} version of the GNU implementation of GAA.
+@sp 2
+Published by no one.
+@end titlepage
+
+@tex
+\documentclass{book}
+\usepackage{html}
+\usepackage{fancyheadings}
+
+\begin{document}
+
+\begin{center}
+{\bf \underline{GAA Manual}}\\
+GAA Argument Analyzer
+
+\vspace*{\stretch{2}}
+
+\copyright\ Joran Maille 1998,1999\\
+Portions \copyright\ Nikos Mavroyanopoulos 2002
+\end{center}
+
+\tableofcontents
+
+\input{tut.tex}
+\input{ref.tex}
+
+\end{document}
+@end tex
+
+@ifinfo
+@node Top, (dir), (dir)
+@top General Introduction
+@c Preface or Licensing nodes should come right
+@c after the Top node, in `unnumbered' sections,
+@c then the chapter, `What is GAA'.
+This file documents @code{gaa}, a tool that does
+really neat things.
+This is Edition @value{VERSION} of @cite{The GAA Argument Analyzer}, for the
+@value{VERSION} version of the GNU implementation of GAA.@refill
+@end ifinfo
+
+@summarycontents
+@contents
+@bye

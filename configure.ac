@@ -39,6 +39,10 @@ else
 	AC_SUBST([RANLIB])
 fi
 
+dnl# Documentation tools.
+AC_PATH_PROG([LATEX_BIN],[latex])
+AC_PATH_PROG([LATEX2HTML_BIN],[latex2html])
+
 dnl# AX_* macros come from the autoconf-archive package
 AX_CHECK_GNU_MAKE
 

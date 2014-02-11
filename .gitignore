@@ -9,8 +9,10 @@ config.h
 confdefs.h
 conftest*
 libtool
-*stamp-h*
+*stamp-*
 source/gaa
 Makefile
 */Makefile
 */*/Makefile
+doc/gaa.html
+doc/gaa.ps
