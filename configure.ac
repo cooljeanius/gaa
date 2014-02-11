@@ -17,7 +17,7 @@ AC_SUBST([gaadocdir])
 AC_SUBST([gaasampledir])
 AC_CANONICAL_TARGET dnl# also checks the "_BUILD" and "_HOST" versions
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([gnits])
 AM_MAINTAINER_MODE
 AM_SANITY_CHECK
 AC_SEARCH_LIBS([strerror],[cposix]) dnl# used to be AC\_ISC\_POSIX

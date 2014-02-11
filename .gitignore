@@ -7,6 +7,7 @@
 *.status
 config.h
 confdefs.h
+conftest*
 libtool
 *stamp-h*
 source/gaa

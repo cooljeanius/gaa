@@ -384,9 +384,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu source/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnits source/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu source/Makefile
+	  $(AUTOMAKE) --gnits source/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -454,6 +454,22 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+
+installcheck-binPROGRAMS: $(bin_PROGRAMS)
+	bad=0; pid=$$$$; list="$(bin_PROGRAMS)"; for p in $$list; do \
+	  case ' $(AM_INSTALLCHECK_STD_OPTIONS_EXEMPT) ' in \
+	   *" $$p "* | *" $(srcdir)/$$p "*) continue;; \
+	  esac; \
+	  f=`echo "$$p" | \
+	     sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+	  for opt in --help --version; do \
+	    if "$(DESTDIR)$(bindir)/$$f" $$opt >c$${pid}_.out \
+	         2>c$${pid}_.err </dev/null \
+		 && test -n "`cat c$${pid}_.out`" \
+		 && test -z "`cat c$${pid}_.err`"; then :; \
+	    else echo "$$f does not support $$opt" 1>&2; bad=1; fi; \
+	  done; \
+	done; rm -f c$${pid}_.???; exit $$bad
 gaa_parser.h: gaa_parser.c
 	@if test ! -f $@; then rm -f gaa_parser.c; else :; fi
 	@if test ! -f $@; then $(MAKE) $(AM_MAKEFLAGS) gaa_parser.c; else :; fi
@@ -790,7 +806,7 @@ install-ps: install-ps-recursive
 
 install-ps-am:
 
-installcheck-am:
+installcheck-am: installcheck-binPROGRAMS
 
 maintainer-clean: maintainer-clean-recursive
 	-rm -rf ./$(DEPDIR)
@@ -823,11 +839,12 @@ uninstall-am: uninstall-binPROGRAMS
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-binPROGRAMS
+	install-strip installcheck installcheck-am \
+	installcheck-binPROGRAMS installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
+	uninstall-binPROGRAMS
 
 
 gaaout.c: gaa.gaa

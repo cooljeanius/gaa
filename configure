@@ -16203,14 +16203,14 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-  if test "x$exec_prefix" = xNONE || test "x$exec_prefix" = 'x${prefix}'; then
-     if test "x$prefix" = xNONE; then
+  if test "x${exec_prefix}" = xNONE || test "x${exec_prefix}" = 'x${prefix}'; then
+     if test "x${prefix}" = xNONE; then
      	test_prefix=/usr/local
      else
-	test_prefix=$prefix
+	test_prefix=${prefix}
      fi
   else
-     test_prefix=$exec_prefix
+     test_prefix=${exec_prefix}
   fi
   value=0
   case ${bison_bin} in
@@ -16221,7 +16221,7 @@ _ACEOF
   esac
 
 cat >>confdefs.h <<_ACEOF
-#define BISON_BIN_RELOCATABLE $value
+#define BISON_BIN_RELOCATABLE ${value}
 _ACEOF
 
 
