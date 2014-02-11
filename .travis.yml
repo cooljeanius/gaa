@@ -1,8 +1,8 @@
 language: C
 
 install:
-  # Prerequisites
-  - "sudo apt-get install texinfo"
+  # Prerequisites for documentation
+  - "sudo apt-get install texinfo texlive-latex-base"
 
 # try to build
 script: ./configure && make
