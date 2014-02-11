@@ -10,3 +10,6 @@ confdefs.h
 libtool
 *stamp-h*
 source/gaa
+Makefile
+*/Makefile
+*/*/Makefile

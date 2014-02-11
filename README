@@ -1,7 +1,7 @@
 GAA Argument Analyser (http://gaa.sf.net)
 
-	GAA simplifies the life of the programmer: you don't have to
-worry about the arguments given to it! A short text written in GAA
+	GAA simplifies the life of the programmer: you can avoid
+worrying about the arguments given to it! A short text written in GAA
 language generates C-code which analyses the arguments and creates your
 program's help.
 
