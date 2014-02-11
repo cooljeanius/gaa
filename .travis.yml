@@ -2,7 +2,7 @@ language: C
 
 install:
   # Prerequisites for documentation
-  - "sudo apt-get install texinfo texlive-latex-base"
+  - "sudo apt-get install texinfo texlive-latex-base latex2html"
 
 # try to build
 script: ./configure && make
