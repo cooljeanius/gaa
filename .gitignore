@@ -11,6 +11,7 @@ conftest*
 libtool
 *stamp-*
 source/gaa
+*/.libs/*
 Makefile
 */Makefile
 */*/Makefile
