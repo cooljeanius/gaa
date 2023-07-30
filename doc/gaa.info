@@ -1,4 +1,4 @@
-This is gaa.info, produced by makeinfo version 5.2 from gaa.texi.
+This is gaa.info, produced by makeinfo version 4.8 from gaa.texi.
 
 
 File: gaa.info,  Node: Top,  Next: (dir),  Prev: (dir)
@@ -6,9 +6,9 @@ File: gaa.info,  Node: Top,  Next: (dir),  Prev: (dir)
 General Introduction
 ********************
 
-This file documents 'gaa', a tool that does really neat things.  This is
-Edition 1.6.6 of 'The GAA Argument Analyzer', for the 1.6.6 version of
-the GNU implementation of GAA.
+This file documents `gaa', a tool that does really neat things.  This
+is Edition 1.6.6 of `The GAA Argument Analyzer', for the 1.6.6 version
+of the GNU implementation of GAA.
 
 
 
