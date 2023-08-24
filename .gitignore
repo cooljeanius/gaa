@@ -20,3 +20,4 @@ doc/gaa.ps
 *(Autosaved)*
 *.dSYM
 gaa-*.*.*/*
+.env.local
