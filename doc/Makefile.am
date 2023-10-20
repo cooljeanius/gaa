@@ -8,7 +8,7 @@ $(TEX_OBJECTS):
 	  cp $(srcdir)/$@ .; \
 	elif test ! -e $@ && test -e $(builddir)/$@; then \
 	  cp $(builddir)/$@ .; \
-	elif ! -e $@ && test -d ../.git && test -x "`which git`"; then \
+	elif test ! -e $@ && test -d ../.git && test -x "`which git`"; then \
 	  if test -n "`git status -s $@ | grep D`"; then \
 	    echo "$@ appears to have been deleted; attempting to restore it..."; \
 	    git restore $@; \
@@ -86,4 +86,15 @@ distclean-local:
 	      fi; \
 	    fi; \
 	  done; \
+	fi; \
+	if test ! -e gaa.html/index.html && test -d ../.git && test -x "`which git`"; then \
+	  echo "gaa.html/index.html might be missing; checking with git..."; \
+	  if test -n "`git status -s gaa.html/index.html 2>/dev/null | grep D`"; then \
+	    echo "gaa.html/index.html appears to have been deleted; attempting to restore it..."; \
+	    git restore gaa.html/index.html; \
+	  elif test -d gaa.html -a -r gaa.html; then \
+	    stat gaa.html && ls gaa.html/*; \
+	  else \
+	    ls; \
+	  fi; \
 	fi
