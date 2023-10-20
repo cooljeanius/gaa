@@ -99,7 +99,7 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_gnu_make.m4 \
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/version.texi \
-	$(srcdir)/stamp-vti $(am__DIST_COMMON)
+	$(srcdir)/stamp-vti $(dist_gaadoc_DATA) $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
@@ -192,7 +192,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-DATA = $(gaadoc_DATA)
+DATA = $(dist_gaadoc_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/config/mdate-sh \
 	$(top_srcdir)/config/texinfo.tex
@@ -344,7 +344,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = ref.tex gaa.html/index.html gaa.ps gaa.tex img1.png tut.tex gaa.css
-gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
+dist_gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
 TEX_OBJECTS = ref.tex gaa.tex tut.tex
 info_TEXINFOS = gaa.texi
 all: all-am
@@ -546,9 +546,9 @@ maintainer-clean-aminfo:
 	  echo " rm -f $$i $$i-[0-9] $$i-[0-9][0-9] $$i_i[0-9] $$i_i[0-9][0-9]"; \
 	  rm -f $$i $$i-[0-9] $$i-[0-9][0-9] $$i_i[0-9] $$i_i[0-9][0-9]; \
 	done
-install-gaadocDATA: $(gaadoc_DATA)
+install-dist_gaadocDATA: $(dist_gaadoc_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(gaadoc_DATA)'; test -n "$(gaadocdir)" || list=; \
+	@list='$(dist_gaadoc_DATA)'; test -n "$(gaadocdir)" || list=; \
 	if test -n "$$list"; then \
 	  echo " $(MKDIR_P) '$(DESTDIR)$(gaadocdir)'"; \
 	  $(MKDIR_P) "$(DESTDIR)$(gaadocdir)" || exit 1; \
@@ -562,9 +562,9 @@ install-gaadocDATA: $(gaadoc_DATA)
 	  $(INSTALL_DATA) $$files "$(DESTDIR)$(gaadocdir)" || exit $$?; \
 	done
 
-uninstall-gaadocDATA:
+uninstall-dist_gaadocDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(gaadoc_DATA)'; test -n "$(gaadocdir)" || list=; \
+	@list='$(dist_gaadoc_DATA)'; test -n "$(gaadocdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(gaadocdir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
@@ -666,7 +666,7 @@ info: info-am
 
 info-am: $(INFO_DEPS)
 
-install-data-am: install-gaadocDATA install-info-am
+install-data-am: install-dist_gaadocDATA install-info-am
 
 install-dvi: install-dvi-am
 
@@ -803,8 +803,9 @@ ps: ps-am
 
 ps-am: $(PSS)
 
-uninstall-am: uninstall-dvi-am uninstall-gaadocDATA uninstall-html-am \
-	uninstall-info-am uninstall-pdf-am uninstall-ps-am
+uninstall-am: uninstall-dist_gaadocDATA uninstall-dvi-am \
+	uninstall-html-am uninstall-info-am uninstall-pdf-am \
+	uninstall-ps-am
 
 .MAKE: install-am install-strip
 
@@ -812,16 +813,16 @@ uninstall-am: uninstall-dvi-am uninstall-gaadocDATA uninstall-html-am \
 	clean-libtool cscopelist-am ctags-am dist-info distclean \
 	distclean-generic distclean-libtool distclean-local distdir \
 	dvi dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dvi install-dvi-am \
-	install-exec install-exec-am install-gaadocDATA install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-aminfo \
+	install-data install-data-am install-dist_gaadocDATA \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-man install-pdf install-pdf-am install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-aminfo \
 	maintainer-clean-generic maintainer-clean-vti mostlyclean \
 	mostlyclean-aminfo mostlyclean-generic mostlyclean-libtool \
 	mostlyclean-vti pdf pdf-am ps ps-am tags-am uninstall \
-	uninstall-am uninstall-dvi-am uninstall-gaadocDATA \
+	uninstall-am uninstall-dist_gaadocDATA uninstall-dvi-am \
 	uninstall-html-am uninstall-info-am uninstall-pdf-am \
 	uninstall-ps-am
 

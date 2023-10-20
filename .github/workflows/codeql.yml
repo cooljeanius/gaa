@@ -65,7 +65,7 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Dependencies
-      run: sudo apt-get update && sudo apt-get install texlive
+      run: sudo apt-get update && sudo apt-get install texlive latex2html
   
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually

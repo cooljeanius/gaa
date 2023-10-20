@@ -1,5 +1,5 @@
 EXTRA_DIST = ref.tex gaa.html/index.html gaa.ps gaa.tex img1.png tut.tex gaa.css
-gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
+dist_gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
 
 TEX_OBJECTS = ref.tex gaa.tex tut.tex
 
