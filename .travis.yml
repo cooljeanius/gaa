@@ -7,7 +7,7 @@ install:
   - "sudo apt-get install texinfo texlive-latex-base latex2html"
 
 # try to build
-script: ./configure && make
+script: ./configure && make && make check && make distcheck
 
 compiler:
   - clang

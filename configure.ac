@@ -6,15 +6,15 @@ AC_INIT([gaa],[1.6.6],[nmav@gnutls.org])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_AUX_DIR([config])
+AC_CONFIG_AUX_DIR([config])dnl
 
 gaadatadir=${datadir}/gaa
 gaadocdir=${datadir}/doc/gaa
 gaasampledir=${datadir}/gaa/sample
 
-AC_SUBST([gaadatadir])
-AC_SUBST([gaadocdir])
-AC_SUBST([gaasampledir])
+AC_SUBST([gaadatadir])dnl
+AC_SUBST([gaadocdir])dnl
+AC_SUBST([gaasampledir])dnl
 AC_CANONICAL_TARGET dnl# also checks the "_BUILD" and "_HOST" versions
 
 AM_INIT_AUTOMAKE([check-news gnits])
@@ -40,14 +40,16 @@ else
 fi
 
 dnl# Documentation tools.
-AC_PATH_PROG([LATEX_BIN],[latex])
-AC_PATH_PROG([LATEX2HTML_BIN],[latex2html])
+AC_PATH_PROG([LATEX_BIN],[latex],[latex])
+AC_PATH_PROG([LATEX2HTML_BIN],[latex2html],[latex2html])
+AC_PATH_PROG([DVIPS_BIN],[dvips],[dvips])
+AC_PATH_PROG([TEXI2DVI_BIN],[texi2dvi],[texi2dvi])dnl
 
 dnl# AX_* macros come from the autoconf-archive package
 AX_CHECK_GNU_MAKE
 
 dnl# Checks for libraries.
-AC_CHECK_LIB([c],[getline])
+AC_CHECK_LIB([c],[getline])dnl
 
 if test "x${ac_cv_c_compiler_gnu}" != "xno"; then
   CFLAGS="${CFLAGS} -ggdb3 -Wall -Wpointer-arith"
@@ -55,7 +57,7 @@ fi
 
 dnl# Checks for header files.
 AC_HEADER_STDBOOL
-AC_CHECK_HEADERS([stddef.h stdio.h])
+AC_CHECK_HEADERS([stddef.h stdio.h])dnl
 
 dnl# Checks for typedefs, structures, and compiler characteristics.
 AC_C_BIGENDIAN
@@ -71,15 +73,15 @@ if test -z "${BISON}"; then
 else
   YACC="${BISON} -y"
 fi
-AC_SUBST([YACC])
+AC_SUBST([YACC])dnl
 
 AC_ARG_WITH([bison-bin],[
 AS_HELP_STRING([--with-bison-bin=PATH],[specify where to find the bison program])],
 [bison_bin="${withval}"
  AC_DEFINE_UNQUOTED([BISON_BIN],["${bison_bin}"],
-                    [Path of directory of bison program.])
- GDB_AC_DEFINE_RELOCATABLE([BISON_BIN],[bison],[${bison_bin}])
-])
+                    [Path of directory of bison program.])dnl
+ GDB_AC_DEFINE_RELOCATABLE([BISON_BIN],[bison],[${bison_bin}])dnl
+])dnl
 
 AM_PROG_LEX
 
@@ -87,8 +89,9 @@ dnl# Checks for library functions.
 AC_FUNC_ALLOCA
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
-AC_CHECK_FUNCS([getline memset strdup strncasecmp strstr])
+AC_CHECK_FUNCS([getline memset strdup strncasecmp strstr])dnl
 
+# Output.
 AC_CONFIG_FILES([source/Makefile \
                  Makefile \
                  doc/Makefile \

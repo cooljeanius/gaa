@@ -9,10 +9,10 @@
 /* Define if the bison directory should be relocated when GDB is moved. */
 #undef BISON_BIN_RELOCATABLE
 
-/* Define to 1 if using `alloca.c'. */
+/* Define to 1 if using 'alloca.c'. */
 #undef C_ALLOCA
 
-/* Define to 1 if you have `alloca', as a function or macro. */
+/* Define to 1 if you have 'alloca', as a function or macro. */
 #undef HAVE_ALLOCA
 
 /* Define to 1 if <alloca.h> works. */

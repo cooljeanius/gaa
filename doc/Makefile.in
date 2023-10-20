@@ -224,6 +224,7 @@ DEPDIR = @DEPDIR@
 DLLTOOL = @DLLTOOL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
+DVIPS_BIN = @DVIPS_BIN@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
@@ -275,6 +276,7 @@ SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+TEXI2DVI_BIN = @TEXI2DVI_BIN@
 VERSION = @VERSION@
 YACC = @YACC@
 YFLAGS = @YFLAGS@
@@ -341,8 +343,8 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = ref.tex gaa.html gaa.ps gaa.tex img1.png tut.tex gaa.css
-gaadoc_DATA = gaa.html gaa.ps img1.png gaa.css
+EXTRA_DIST = ref.tex gaa.html/index.html gaa.ps gaa.tex img1.png tut.tex gaa.css
+gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
 TEX_OBJECTS = ref.tex gaa.tex tut.tex
 info_TEXINFOS = gaa.texi
 all: all-am
@@ -429,7 +431,6 @@ clean-libtool:
 	  rm -rf $(@:.html=.htp); exit 1; \
 	fi
 $(srcdir)/gaa.info: gaa.texi $(srcdir)/version.texi
-gaa.dvi: gaa.texi $(srcdir)/version.texi
 gaa.pdf: gaa.texi $(srcdir)/version.texi
 gaa.html: gaa.texi $(srcdir)/version.texi
 $(srcdir)/version.texi: @MAINTAINER_MODE_TRUE@ $(srcdir)/stamp-vti
@@ -651,7 +652,7 @@ clean-am: clean-aminfo clean-generic clean-libtool mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
-distclean-am: clean-am distclean-generic
+distclean-am: clean-am distclean-generic distclean-local
 
 dvi: dvi-am
 
@@ -809,10 +810,10 @@ uninstall-am: uninstall-dvi-am uninstall-gaadocDATA uninstall-html-am \
 
 .PHONY: all all-am check check-am clean clean-aminfo clean-generic \
 	clean-libtool cscopelist-am ctags-am dist-info distclean \
-	distclean-generic distclean-libtool distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-gaadocDATA install-html \
+	distclean-generic distclean-libtool distclean-local distdir \
+	dvi dvi-am html html-am info info-am install install-am \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-gaadocDATA install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
 	install-strip installcheck installcheck-am installdirs \
@@ -827,12 +828,88 @@ uninstall-am: uninstall-dvi-am uninstall-gaadocDATA uninstall-html-am \
 .PRECIOUS: Makefile
 
 
-gaa.ps: $(TEX_OBJECTS)
-	-latex gaa.tex && latex gaa.tex && dvips gaa.dvi -o gaa.ps
+$(TEX_OBJECTS):
+	if test ! -e $@ && test -e $(srcdir)/$@; then \
+	  cp $(srcdir)/$@ .; \
+	elif test ! -e $@ && test -e $(builddir)/$@; then \
+	  cp $(builddir)/$@ .; \
+	elif ! -e $@ && test -d ../.git && test -x "`which git`"; then \
+	  if test -n "`git status -s $@ | grep D`"; then \
+	    echo "$@ appears to have been deleted; attempting to restore it..."; \
+	    git restore $@; \
+	  else \
+	    echo "something weird appears to have happened with $@"; \
+	    touch $@; \
+	  fi; \
+	else \
+	  touch $@; \
+	fi
+
+gaa.dvi: $(TEX_OBJECTS)
+	for neededfile in $(TEX_OBJECTS); do \
+	  if test ! -e $${neededfile}; then \
+	    $(MAKE) $${neededfile}; \
+	  fi; \
+	  if test ! -e $${neededfile} && test -e $(srcdir)/$${neededfile}; then \
+	    cp $(srcdir)/$${neededfile} .; \
+	  elif test ! -e $${neededfile} && test -e $(builddir)/$${neededfile}; then \
+	    cp $(builddir)/$${neededfile} .; \
+	  elif test ! -e $${neededfile}; then \
+	    touch $${neededfile}; \
+	  fi; \
+	done; \
+	if test -x "$(LATEX_BIN)"; then \
+	  $(LATEX_BIN) gaa.tex && $(LATEX_BIN) gaa.tex; \
+	elif test -x "`which latex`"; then \
+	  latex gaa.tex && latex gaa.tex; \
+	elif test -x "$(LATEX)"; then \
+	  $(LATEX) gaa.tex && $(LATEX) gaa.tex; \
+	elif test -x "$(TEXI2DVI_BIN)" && test -e gaa.texi && test -e $(srcdir)/version.texi; then \
+	  $(TEXI2DVI_BIN) gaa.texi; \
+	elif test -x "$(TEXI2DVI)" && test -e gaa.texi && test -e $(srcdir)/version.texi; then \
+	  $(TEXI2DVI) gaa.texi; \
+	elif test -x "`which texi2dvi`" && test -e gaa.texi && test -e $(srcdir)/version.texi; then \
+	  texi2dvi gaa.texi; \
+	else \
+	  touch gaa.dvi; \
+	fi
+
+gaa.ps: gaa.dvi
+	if test -x "$(DVIPS_BIN)"; then \
+	  $(DVIPS_BIN) gaa.dvi -o gaa.ps; \
+	elif test -x "$(DVIPS)"; then \
+	  $(DVIPS) gaa.dvi -o gaa.ps; \
+	elif test -x "`which dvips`"; then \
+	  dvips gaa.dvi -o gaa.ps; \
+	else \
+	  touch gaa.ps; \
+	fi
 
 gaa.tex.html: $(TEX_OBJECTS)
-	-latex2html gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math \
-	-info "" -white
+	-if test -x "$(LATEX2HTML_BIN)"; then \
+	  $(LATEX2HTML_BIN) gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math -info "" -white; \
+	elif test -x "$(LATEX2HTML)"; then \
+	  $(LATEX2HTML) gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math -info "" -white; \
+	elif test -x "`which latex2html`"; then \
+	  latex2html gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math -info "" -white; \
+	else \
+	  touch gaa.tex.html; \
+	fi
+
+distclean-local:
+	if test "x$(srcdir)" != "x$(builddir)"; then \
+	  for junkfile in tut.tex gaa.aux gaa.log ref.tex gaa.toc gaa.tex; do \
+	    if test -e $(builddir)/$${junkfile}; then \
+	      if test -e $(srcdir)/$${junkfile} -a -w $(builddir); then \
+	        rm -fv $(builddir)/$${junkfile}; \
+	      elif test -w $(srcdir) -a ! -e $(srcdir)/$${junkfile}; then \
+	         mv -v $(builddir)/$${junkfile} $(srcdir)/$${junkfile}; \
+	      elif test -r $(builddir)/$${junkfile} -a -w $(builddir); then \
+	        rm -fv $(builddir)/$${junkfile}; \
+	      fi; \
+	    fi; \
+	  done; \
+	fi
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
