@@ -112,10 +112,10 @@ dist_info_TEXINFOS += gaa.texi
 EXTRA_DIST += $(dist_info_TEXINFOS)
 endif
 
-EXTRA_DIST += gaa.info version.texi
+EXTRA_DIST += version.texi
 
 check-local:
-	for myfile in $(EXTRA_DIST); do \
+	for myfile in $(EXTRA_DIST) gaa.info; do \
 	  if test -e $${myfile}; then \
 	    stat $${myfile}; \
 	  elif test -e $(srcdir)/$${myfile}; then \
