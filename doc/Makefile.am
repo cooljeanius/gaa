@@ -72,6 +72,7 @@ gaa.tex.html: $(TEX_OBJECTS)
 	fi
 
 info_TEXINFOS = gaa.texi
+EXTRA_DIST += $(info_TEXINFOS)
 
 distclean-local:
 	if test "x$(srcdir)" != "x$(builddir)"; then \

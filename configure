@@ -18533,8 +18533,23 @@ else $as_nop
   LEXLIB=$ac_cv_lib_lex
 fi
   ac_save_LIBS="$LIBS"
-      LIBS=
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for library containing yywrap" >&5
+      if test -n "$LEXLIB"
+then :
+  LIBS="$LEXLIB"
+        ac_fn_c_check_func "$LINENO" "yywrap" "ac_cv_func_yywrap"
+if test "x$ac_cv_func_yywrap" = xyes
+then :
+  :
+else $as_nop
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: $LEXLIB does not contain yywrap; giving up on $LEX" >&5
+printf "%s\n" "$as_me: WARNING: $LEXLIB does not contain yywrap; giving up on $LEX" >&2;}
+          LEX=: LEXLIB=
+fi
+
+
+else $as_nop
+  LIBS=
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for library containing yywrap" >&5
 printf %s "checking for library containing yywrap... " >&6; }
 if test ${ac_cv_search_yywrap+y}
 then :
@@ -18593,6 +18608,13 @@ then :
   LEXLIB="$LIBS"
 fi
 
+        if test x"$ac_cv_search_yywrap" = xno
+then :
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: yywrap not found; giving up on $LEX" >&5
+printf "%s\n" "$as_me: WARNING: yywrap not found; giving up on $LEX" >&2;}
+          LEX=: LEXLIB=
+fi
+fi
       LIBS="$ac_save_LIBS"
 fi
 

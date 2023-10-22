@@ -83,6 +83,7 @@ AS_HELP_STRING([--with-bison-bin=PATH],[specify where to find the bison program]
  GDB_AC_DEFINE_RELOCATABLE([BISON_BIN],[bison],[${bison_bin}])dnl
 ])dnl
 
+AC_PROG_LEX([yywrap])
 AM_PROG_LEX
 
 dnl# Checks for library functions.
