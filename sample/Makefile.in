@@ -303,6 +303,7 @@ top_srcdir = @top_srcdir@
 want_docs = @want_docs@
 EXTRA_DIST = sample.gaa smain.c sample3.gaa sample2.gaa smain2.c config sample4.gaa
 gaasample_DATA = sample3.gaa sample.gaa smain.c sample2.gaa smain2.c config sample4.gaa
+GAA_EXE = $(top_builddir)/source/gaa
 all: all-am
 
 .SUFFIXES:
@@ -402,6 +403,7 @@ distdir-am: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) check-local
 check: check-am
 all-am: Makefile $(DATA)
 installdirs:
@@ -504,23 +506,34 @@ ps-am:
 
 uninstall-am: uninstall-gaasampleDATA
 
-.MAKE: install-am install-strip
+.MAKE: check-am install-am install-strip
 
-.PHONY: all all-am check check-am clean clean-generic clean-libtool \
-	cscopelist-am ctags-am distclean distclean-generic \
-	distclean-libtool distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am \
-	install-gaasampleDATA install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags-am uninstall \
-	uninstall-am uninstall-gaasampleDATA
+.PHONY: all all-am check check-am check-local clean clean-generic \
+	clean-libtool cscopelist-am ctags-am distclean \
+	distclean-generic distclean-libtool distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-gaasampleDATA install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags-am uninstall uninstall-am uninstall-gaasampleDATA
 
 .PRECIOUS: Makefile
 
+
+check-local: $(GAA_EXE)
+	for gaafile in sample.gaa sample2.gaa sample3.gaa sample4.gaa; do \
+	  if test -x $(GAA_EXE) -a -r $${gaafile} -a -w .; then \
+	    echo "skipping testing $(GAA_EXE) on $${gaafile} (FIXME)"; \
+	  elif test -e $${gaafile}; then \
+	    stat $${gaafile}; \
+	  else \
+	    echo "uh oh, what happened to $${gaafile}?!"; \
+	  fi; \
+	done
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
