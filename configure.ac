@@ -6,7 +6,8 @@ AC_INIT([gaa],[1.6.6],[nmav@gnutls.org])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_AUX_DIR([config])dnl
+AC_CONFIG_AUX_DIR([config])
+AC_REQUIRE_AUX_FILE([depcomp])dnl
 
 gaadatadir=${datadir}/gaa
 gaadocdir=${datadir}/doc/gaa
@@ -40,10 +41,25 @@ else
 fi
 
 dnl# Documentation tools.
-AC_PATH_PROG([LATEX_BIN],[latex],[latex])
-AC_PATH_PROG([LATEX2HTML_BIN],[latex2html],[latex2html])
-AC_PATH_PROG([DVIPS_BIN],[dvips],[dvips])
-AC_PATH_PROG([TEXI2DVI_BIN],[texi2dvi],[texi2dvi])dnl
+AC_ARG_WITH([docs],
+            [AS_HELP_STRING([--with-docs],[build documentation])],
+[build_docs="${withval}"
+ AC_SUBST([want_docs])dnl
+])dnl
+
+AS_IF([test "x${build_docs}" = "xyes"],[
+  AC_PATH_PROG([LATEX_BIN],[latex],[latex])
+  AC_PATH_PROG([LATEX2HTML_BIN],[latex2html],[latex2html])
+  AC_PATH_PROG([DVIPS_BIN],[dvips],[dvips])
+  AC_PATH_PROG([TEXI2DVI_BIN],[texi2dvi],[texi2dvi])
+],[
+  AC_SUBST([LATEX_BIN],[false])
+  AC_SUBST([LATEX2HTML_BIN],[false])
+  AC_SUBST([DVIPS_BIN],[false])
+  AC_SUBST([TEXI2DVI_BIN],[false])
+])dnl
+
+AM_CONDITIONAL([BUILD_DOCS],[test "x${build_docs}" = "xyes"])dnl
 
 dnl# AX_* macros come from the autoconf-archive package
 AX_CHECK_GNU_MAKE
@@ -83,7 +99,17 @@ AS_HELP_STRING([--with-bison-bin=PATH],[specify where to find the bison program]
  GDB_AC_DEFINE_RELOCATABLE([BISON_BIN],[bison],[${bison_bin}])dnl
 ])dnl
 
-AC_PROG_LEX([yywrap])
+AC_ARG_WITH([yywrap],
+            [AS_HELP_STRING([--with-yywrap],[check for yywrap])],
+[want_yywrap="${withval}"
+ AC_SUBST([want_yywrap])dnl
+])dnl
+
+AS_IF([test "x${want_yywrap}" = "xyes"],[
+  AC_PROG_LEX([yywrap])
+],[
+  AC_PROG_LEX([noyywrap])
+])
 AM_PROG_LEX
 
 dnl# Checks for library functions.

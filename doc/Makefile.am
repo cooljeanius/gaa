@@ -71,8 +71,13 @@ gaa.tex.html: $(TEX_OBJECTS)
 	  touch gaa.tex.html; \
 	fi
 
+if BUILD_DOCS
 info_TEXINFOS = gaa.texi
 EXTRA_DIST += $(info_TEXINFOS)
+else
+dist_info_TEXINFOS = gaa.texi
+EXTRA_DIST += $(dist_info_TEXINFOS)
+endif
 
 distclean-local:
 	if test "x$(srcdir)" != "x$(builddir)"; then \

@@ -343,6 +343,8 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+want_docs = @want_docs@
+want_yywrap = @want_yywrap@
 EXTRA_DIST = ref.tex gaa.html/index.html gaa.ps gaa.tex img1.png \
 	tut.tex gaa.css $(info_TEXINFOS)
 dist_gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css

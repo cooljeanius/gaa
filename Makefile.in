@@ -161,13 +161,13 @@ am__define_uniq_tagged_files = \
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(top_srcdir)/config/compile $(top_srcdir)/config/config.guess \
-	$(top_srcdir)/config/config.sub \
+	$(top_srcdir)/config/config.sub $(top_srcdir)/config/depcomp \
 	$(top_srcdir)/config/install-sh $(top_srcdir)/config/ltmain.sh \
 	$(top_srcdir)/config/missing AUTHORS COPYING ChangeLog INSTALL \
 	NEWS README THANKS TODO config/compile config/config.guess \
-	config/config.sub config/install-sh config/ltmain.sh \
-	config/mdate-sh config/missing config/texinfo.tex \
-	config/ylwrap
+	config/config.sub config/depcomp config/install-sh \
+	config/ltmain.sh config/mdate-sh config/missing \
+	config/texinfo.tex config/ylwrap
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -358,6 +358,8 @@ target_vendor = @target_vendor@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+want_docs = @want_docs@
+want_yywrap = @want_yywrap@
 SUBDIRS = source doc sample
 EXTRA_DIST = TODO
 ACLOCAL_AMFLAGS = -I m4 --install
