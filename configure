@@ -3043,12 +3043,7 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
-
-
 ac_config_headers="$ac_config_headers config.h"
-
-
-
 
 
 
@@ -3786,7 +3781,6 @@ END
     as_fn_error $? "Your 'rm' program is bad, sorry." "$LINENO" 5
   fi
 fi
-
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether to enable maintainer-specific portions of Makefiles" >&5
 printf %s "checking whether to enable maintainer-specific portions of Makefiles... " >&6; }
@@ -17476,7 +17470,6 @@ else
 printf "%s\n" "no" >&6; }
 fi
 
-
   # Extract the first word of "latex2html", so it can be a program name with args.
 set dummy latex2html; ac_word=$2
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -17522,7 +17515,6 @@ else
 printf "%s\n" "no" >&6; }
 fi
 
-
   # Extract the first word of "dvips", so it can be a program name with args.
 set dummy dvips; ac_word=$2
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -17567,7 +17559,6 @@ else
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
 printf "%s\n" "no" >&6; }
 fi
-
 
   # Extract the first word of "texi2dvi", so it can be a program name with args.
 set dummy texi2dvi; ac_word=$2
@@ -17615,17 +17606,12 @@ printf "%s\n" "no" >&6; }
 fi
 
 
-
 else $as_nop
 
   LATEX_BIN=false
-
   LATEX2HTML_BIN=false
-
   DVIPS_BIN=false
-
   TEXI2DVI_BIN=false
-
 
 fi
  if test "x${build_docs}" = "xyes"; then
@@ -18695,7 +18681,7 @@ fi
 fi
 rm -f conftest.l $LEX_OUTPUT_ROOT.c
 
-fi
+fi ## (bug in autoconf/automake makes us put both of these)
 if test "$LEX" = :; then
   LEX=${am_missing_run}flex
 fi
@@ -19012,7 +18998,6 @@ fi
 
 # Output.
 ac_config_files="$ac_config_files source/Makefile Makefile doc/Makefile source/skel/Makefile sample/Makefile"
-
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure

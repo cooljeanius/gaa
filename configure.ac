@@ -1,12 +1,12 @@
 dnl#                                               -*- Autoconf -*-
 dnl# Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.50])
-AC_INIT([gaa],[1.6.6],[nmav@gnutls.org])
-AC_CONFIG_SRCDIR([config.h.in])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_AUX_DIR([config])
+AC_PREREQ([2.50])dnl
+AC_INIT([gaa],[1.6.6],[nmav@gnutls.org])dnl
+AC_CONFIG_SRCDIR([config.h.in])dnl
+AC_CONFIG_HEADERS([config.h])dnl
+AC_CONFIG_MACRO_DIR([m4])dnl
+AC_CONFIG_AUX_DIR([config])dnl
 AC_REQUIRE_AUX_FILE([depcomp])dnl
 
 gaadatadir=${datadir}/gaa
@@ -18,7 +18,7 @@ AC_SUBST([gaadocdir])dnl
 AC_SUBST([gaasampledir])dnl
 AC_CANONICAL_TARGET dnl# also checks the "_BUILD" and "_HOST" versions
 
-AM_INIT_AUTOMAKE([check-news gnits])
+AM_INIT_AUTOMAKE([check-news gnits])dnl
 AM_MAINTAINER_MODE
 AM_SANITY_CHECK
 AC_SEARCH_LIBS([strerror],[cposix]) dnl# used to be AC\_ISC\_POSIX
@@ -48,15 +48,15 @@ AC_ARG_WITH([docs],
 ])dnl
 
 AS_IF([test "x${build_docs}" = "xyes"],[
-  AC_PATH_PROG([LATEX_BIN],[latex],[latex])
-  AC_PATH_PROG([LATEX2HTML_BIN],[latex2html],[latex2html])
-  AC_PATH_PROG([DVIPS_BIN],[dvips],[dvips])
-  AC_PATH_PROG([TEXI2DVI_BIN],[texi2dvi],[texi2dvi])
+  AC_PATH_PROG([LATEX_BIN],[latex],[latex])dnl
+  AC_PATH_PROG([LATEX2HTML_BIN],[latex2html],[latex2html])dnl
+  AC_PATH_PROG([DVIPS_BIN],[dvips],[dvips])dnl
+  AC_PATH_PROG([TEXI2DVI_BIN],[texi2dvi],[texi2dvi])dnl
 ],[
-  AC_SUBST([LATEX_BIN],[false])
-  AC_SUBST([LATEX2HTML_BIN],[false])
-  AC_SUBST([DVIPS_BIN],[false])
-  AC_SUBST([TEXI2DVI_BIN],[false])
+  AC_SUBST([LATEX_BIN],[false])dnl
+  AC_SUBST([LATEX2HTML_BIN],[false])dnl
+  AC_SUBST([DVIPS_BIN],[false])dnl
+  AC_SUBST([TEXI2DVI_BIN],[false])dnl
 ])dnl
 
 AM_CONDITIONAL([BUILD_DOCS],[test "x${build_docs}" = "xyes"])dnl
@@ -99,7 +99,7 @@ AS_HELP_STRING([--with-bison-bin=PATH],[specify where to find the bison program]
  GDB_AC_DEFINE_RELOCATABLE([BISON_BIN],[bison],[${bison_bin}])dnl
 ])dnl
 
-AC_PROG_LEX([yywrap])
+AC_PROG_LEX([yywrap]) ## (bug in autoconf/automake makes us put both of these)
 AM_PROG_LEX
 
 dnl# Checks for library functions.
@@ -113,5 +113,5 @@ AC_CONFIG_FILES([source/Makefile \
                  Makefile \
                  doc/Makefile \
                  source/skel/Makefile \
-                 sample/Makefile])
+                 sample/Makefile])dnl
 AC_OUTPUT
