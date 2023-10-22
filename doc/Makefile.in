@@ -853,6 +853,25 @@ $(TEX_OBJECTS):
 	  touch $@; \
 	fi
 
+gaa.html/index.html:
+	if test ! -e $@ && test -d ../.git && test -x "`which git`"; then \
+	  echo "gaa.html/index.html might be missing; checking with git..."; \
+	  if test -n "`git status -s gaa.html/index.html 2>/dev/null | grep D`"; then \
+	    echo "gaa.html/index.html appears to have been deleted; attempting to restore it..."; \
+	    git restore gaa.html/index.html; \
+	  elif test -d gaa.html -a -r gaa.html -a -w gaa.html; then \
+	    stat gaa.html && cp -v `file gaa.html/* | grep "HTML document"` $@; \
+	  else \
+	    touch $@; \
+	  fi; \
+	elif test ! -e $@ && test -e $(srcdir)/$@; then \
+	  cp -v $(srcdir)/$@ $@; \
+	elif test ! -e $@ && test -e $(builddir)/$@; then \
+	  cp -v $(builddir)/$@ $@; \
+	else \
+	  touch $@; \
+	fi
+
 gaa.dvi: $(TEX_OBJECTS)
 	for neededfile in $(TEX_OBJECTS); do \
 	  if test ! -e $${neededfile}; then \
@@ -867,16 +886,22 @@ gaa.dvi: $(TEX_OBJECTS)
 	  fi; \
 	done; \
 	if test -x "$(LATEX_BIN)"; then \
+	  echo "attempting rebuild of $@ with LATEX_BIN ($(LATEX_BIN))"; \
 	  $(LATEX_BIN) gaa.tex && $(LATEX_BIN) gaa.tex; \
 	elif test -x "`which latex`"; then \
+	  echo "attempting rebuild of $@ with whichever latex is first in PATH"; \
 	  latex gaa.tex && latex gaa.tex; \
 	elif test -x "$(LATEX)"; then \
+	  echo "attempting rebuild of $@ with LATEX ($(LATEX))"; \
 	  $(LATEX) gaa.tex && $(LATEX) gaa.tex; \
 	elif test -x "$(TEXI2DVI_BIN)" && test -e gaa.texi && test -e $(srcdir)/version.texi; then \
+	  echo "attempting rebuild of $@ with $(TEXI2DVI_BIN)"; \
 	  $(TEXI2DVI_BIN) gaa.texi; \
 	elif test -x "$(TEXI2DVI)" && test -e gaa.texi && test -e $(srcdir)/version.texi; then \
+	  echo "attempting rebuild of $@ with TEXI2DVI ($(TEXI2DVI))"; \
 	  $(TEXI2DVI) gaa.texi; \
 	elif test -x "`which texi2dvi`" && test -e gaa.texi && test -e $(srcdir)/version.texi; then \
+	  echo "attempting rebuild of $@ with whichever texi2dvi is 1st in PATH"; \
 	  texi2dvi gaa.texi; \
 	else \
 	  touch gaa.dvi; \
@@ -884,10 +909,13 @@ gaa.dvi: $(TEX_OBJECTS)
 
 gaa.ps: gaa.dvi
 	if test -x "$(DVIPS_BIN)"; then \
+	  echo "attempting rebuild of $@ with DVIPS_BIN ($(DVIPS_BIN))"; \
 	  $(DVIPS_BIN) gaa.dvi -o gaa.ps; \
 	elif test -x "$(DVIPS)"; then \
+	  echo "attempting rebuild of $@ with DVIPS ($(DVIPS))"; \
 	  $(DVIPS) gaa.dvi -o gaa.ps; \
 	elif test -x "`which dvips`"; then \
+	  echo "attempting rebuild of $@ with whichever dvips is first in PATH"; \
 	  dvips gaa.dvi -o gaa.ps; \
 	else \
 	  touch gaa.ps; \
@@ -895,10 +923,13 @@ gaa.ps: gaa.dvi
 
 gaa.tex.html: $(TEX_OBJECTS)
 	-if test -x "$(LATEX2HTML_BIN)"; then \
+	  echo "attempting rebuild of $@ with $(LATEX2HTML_BIN)"; \
 	  $(LATEX2HTML_BIN) gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math -info "" -white; \
 	elif test -x "$(LATEX2HTML)"; then \
+	  echo "attempting rebuild of $@ with LATEX2HTML ($(LATEX2HTML))"; \
 	  $(LATEX2HTML) gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math -info "" -white; \
 	elif test -x "`which latex2html`"; then \
+	  echo "attempting rebuild of $@ with whichever latex2html we can find"; \
 	  latex2html gaa.tex -no_navigation -no_subdir 1 -split 0 -local_icons -html_version 3.2,math -info "" -white; \
 	else \
 	  touch gaa.tex.html; \

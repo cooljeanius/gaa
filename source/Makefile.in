@@ -748,6 +748,7 @@ distdir-am: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) check-local
 check: check-recursive
 all-am: Makefile $(PROGRAMS)
 installdirs: installdirs-recursive
@@ -862,12 +863,12 @@ ps-am:
 
 uninstall-am: uninstall-binPROGRAMS
 
-.MAKE: $(am__recursive_targets) install-am install-strip
+.MAKE: $(am__recursive_targets) check-am install-am install-strip
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
-	am--depfiles check check-am clean clean-binPROGRAMS \
-	clean-generic clean-libtool cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic \
+	am--depfiles check check-am check-local clean \
+	clean-binPROGRAMS clean-generic clean-libtool cscopelist-am \
+	ctags ctags-am distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-binPROGRAMS \
 	install-data install-data-am install-dvi install-dvi-am \
@@ -885,6 +886,15 @@ uninstall-am: uninstall-binPROGRAMS
 
 gaaout.c: gaa.gaa
 	gaa gaa.gaa -o gaaout.c -i gaaout.h
+
+check-local:
+	if test -x gaa; then \
+	  ./gaa --help >/dev/null && ./gaa --version; \
+	elif test -x $(builddir)/gaa; then \
+	  $(builddir)/gaa --help >/dev/null && $(builddir)/gaa --version; \
+	else \
+	  echo "no gaa found to test!" >&2; exit 1; \
+	fi
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
