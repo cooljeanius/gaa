@@ -89,6 +89,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
+@BUILD_DOCS_TRUE@am__append_1 = gaa.texi
+@BUILD_DOCS_TRUE@am__append_2 = $(info_TEXINFOS)
+@BUILD_DOCS_FALSE@am__append_3 = $(dist_info_TEXINFOS)
 subdir = doc
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_gnu_make.m4 \
@@ -153,7 +156,7 @@ DVIS = gaa.dvi
 PDFS = gaa.pdf
 PSS = gaa.ps
 HTMLS = gaa.html
-TEXINFOS = gaa.texi
+TEXINFOS = $(am__append_1)
 TEXI2DVI = texi2dvi
 TEXI2PDF = $(TEXI2DVI) --pdf --batch
 MAKEINFOHTML = $(MAKEINFO) --html
@@ -346,10 +349,11 @@ top_srcdir = @top_srcdir@
 want_docs = @want_docs@
 want_yywrap = @want_yywrap@
 EXTRA_DIST = ref.tex gaa.html/index.html gaa.ps gaa.tex img1.png \
-	tut.tex gaa.css $(info_TEXINFOS)
+	tut.tex gaa.css $(am__append_2) $(am__append_3)
 dist_gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
 TEX_OBJECTS = ref.tex gaa.tex tut.tex
-info_TEXINFOS = gaa.texi
+info_TEXINFOS = $(am__append_1)
+@BUILD_DOCS_FALSE@dist_info_TEXINFOS = gaa.texi
 all: all-am
 
 .SUFFIXES:

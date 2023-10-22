@@ -71,8 +71,9 @@ gaa.tex.html: $(TEX_OBJECTS)
 	  touch gaa.tex.html; \
 	fi
 
+info_TEXINFOS =
 if BUILD_DOCS
-info_TEXINFOS = gaa.texi
+info_TEXINFOS += gaa.texi
 EXTRA_DIST += $(info_TEXINFOS)
 else
 dist_info_TEXINFOS = gaa.texi
