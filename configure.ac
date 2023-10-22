@@ -68,7 +68,7 @@ dnl# Checks for libraries.
 AC_CHECK_LIB([c],[getline])dnl
 
 if test "x${ac_cv_c_compiler_gnu}" != "xno"; then
-  CFLAGS="${CFLAGS} -ggdb3 -Wall -Wpointer-arith"
+  CFLAGS="${CFLAGS} -ggdb3 -Wall -Wpointer-arith -Wno-unused"
 fi
 
 dnl# Checks for header files.
