@@ -349,7 +349,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 want_docs = @want_docs@
 EXTRA_DIST = ref.tex gaa.html/index.html gaa.ps gaa.tex img1.png \
-	tut.tex gaa.css $(am__append_2) $(am__append_4)
+	tut.tex gaa.css $(am__append_2) $(am__append_4) gaa.info \
+	version.texi
 dist_gaadoc_DATA = gaa.html/index.html gaa.ps img1.png gaa.css
 TEX_OBJECTS = ref.tex gaa.tex tut.tex
 info_TEXINFOS = $(am__append_1)
@@ -617,6 +618,7 @@ distdir-am: $(DISTFILES)
 	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
 	  dist-info
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) check-local
 check: check-am
 all-am: Makefile $(INFO_DEPS) $(DATA)
 installdirs:
@@ -814,24 +816,24 @@ uninstall-am: uninstall-dist_gaadocDATA uninstall-dvi-am \
 	uninstall-html-am uninstall-info-am uninstall-pdf-am \
 	uninstall-ps-am
 
-.MAKE: install-am install-strip
+.MAKE: check-am install-am install-strip
 
-.PHONY: all all-am check check-am clean clean-aminfo clean-generic \
-	clean-libtool cscopelist-am ctags-am dist-info distclean \
-	distclean-generic distclean-libtool distclean-local distdir \
-	dvi dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-dist_gaadocDATA \
-	install-dvi install-dvi-am install-exec install-exec-am \
-	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-aminfo \
-	maintainer-clean-generic maintainer-clean-vti mostlyclean \
-	mostlyclean-aminfo mostlyclean-generic mostlyclean-libtool \
-	mostlyclean-vti pdf pdf-am ps ps-am tags-am uninstall \
-	uninstall-am uninstall-dist_gaadocDATA uninstall-dvi-am \
-	uninstall-html-am uninstall-info-am uninstall-pdf-am \
-	uninstall-ps-am
+.PHONY: all all-am check check-am check-local clean clean-aminfo \
+	clean-generic clean-libtool cscopelist-am ctags-am dist-info \
+	distclean distclean-generic distclean-libtool distclean-local \
+	distdir dvi dvi-am html html-am info info-am install \
+	install-am install-data install-data-am \
+	install-dist_gaadocDATA install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-aminfo maintainer-clean-generic \
+	maintainer-clean-vti mostlyclean mostlyclean-aminfo \
+	mostlyclean-generic mostlyclean-libtool mostlyclean-vti pdf \
+	pdf-am ps ps-am tags-am uninstall uninstall-am \
+	uninstall-dist_gaadocDATA uninstall-dvi-am uninstall-html-am \
+	uninstall-info-am uninstall-pdf-am uninstall-ps-am
 
 .PRECIOUS: Makefile
 
@@ -934,6 +936,19 @@ gaa.tex.html: $(TEX_OBJECTS)
 	else \
 	  touch gaa.tex.html; \
 	fi
+
+check-local:
+	for myfile in $(EXTRA_DIST); do \
+	  if test -e $${myfile}; then \
+	    stat $${myfile}; \
+	  elif test -e $(srcdir)/$${myfile}; then \
+	    stat $(srcdir)/$${myfile}; \
+	  elif test -e $(builddir)/$${myfile}; then \
+	    stat $(builddir)/$${myfile}; \
+	  else \
+	    echo "missing file $${myfile}!" >&2; exit 1; \
+	  fi; \
+	done
 
 distclean-local:
 	if test "x$(srcdir)" != "x$(builddir)"; then \

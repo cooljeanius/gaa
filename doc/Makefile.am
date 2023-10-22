@@ -112,6 +112,21 @@ dist_info_TEXINFOS += gaa.texi
 EXTRA_DIST += $(dist_info_TEXINFOS)
 endif
 
+EXTRA_DIST += gaa.info version.texi
+
+check-local:
+	for myfile in $(EXTRA_DIST); do \
+	  if test -e $${myfile}; then \
+	    stat $${myfile}; \
+	  elif test -e $(srcdir)/$${myfile}; then \
+	    stat $(srcdir)/$${myfile}; \
+	  elif test -e $(builddir)/$${myfile}; then \
+	    stat $(builddir)/$${myfile}; \
+	  else \
+	    echo "missing file $${myfile}!" >&2; exit 1; \
+	  fi; \
+	done
+
 distclean-local:
 	if test "x$(srcdir)" != "x$(builddir)"; then \
 	  for junkfile in tut.tex gaa.aux gaa.log ref.tex gaa.toc gaa.tex; do \
