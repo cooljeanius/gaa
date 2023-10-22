@@ -99,17 +99,7 @@ AS_HELP_STRING([--with-bison-bin=PATH],[specify where to find the bison program]
  GDB_AC_DEFINE_RELOCATABLE([BISON_BIN],[bison],[${bison_bin}])dnl
 ])dnl
 
-AC_ARG_WITH([yywrap],
-            [AS_HELP_STRING([--with-yywrap],[check for yywrap])],
-[want_yywrap="${withval}"
- AC_SUBST([want_yywrap])dnl
-])dnl
-
-AS_IF([test "x${want_yywrap}" = "xyes"],[
-  AC_PROG_LEX([yywrap])
-],[
-  AC_PROG_LEX([noyywrap])
-])
+AC_PROG_LEX([yywrap])
 AM_PROG_LEX
 
 dnl# Checks for library functions.

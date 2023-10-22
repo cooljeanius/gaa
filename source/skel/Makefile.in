@@ -301,7 +301,6 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 want_docs = @want_docs@
-want_yywrap = @want_yywrap@
 gaadata_DATA = gaa.skel
 EXTRA_DIST = gaa.skel
 all: all-am

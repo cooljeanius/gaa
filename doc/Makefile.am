@@ -72,11 +72,12 @@ gaa.tex.html: $(TEX_OBJECTS)
 	fi
 
 info_TEXINFOS =
+dist_info_TEXINFOS =
 if BUILD_DOCS
 info_TEXINFOS += gaa.texi
 EXTRA_DIST += $(info_TEXINFOS)
 else
-dist_info_TEXINFOS = gaa.texi
+dist_info_TEXINFOS += gaa.texi
 EXTRA_DIST += $(dist_info_TEXINFOS)
 endif
 

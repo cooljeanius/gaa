@@ -667,7 +667,6 @@ ALLOCA
 LEXLIB
 LEX_OUTPUT_ROOT
 LEX
-want_yywrap
 BISON
 YFLAGS
 YACC
@@ -831,7 +830,6 @@ with_sysroot
 enable_libtool_lock
 with_docs
 with_bison_bin
-with_yywrap
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1506,7 +1504,6 @@ Optional Packages:
   --with-docs             build documentation
 
   --with-bison-bin=PATH   specify where to find the bison program
-  --with-yywrap           check for yywrap
 
 Some influential environment variables:
   CC          C compiler command
@@ -18398,18 +18395,7 @@ printf "%s\n" "#define BISON_BIN_RELOCATABLE ${value}" >>confdefs.h
 
 fi
 
-
-# Check whether --with-yywrap was given.
-if test ${with_yywrap+y}
-then :
-  withval=$with_yywrap; want_yywrap="${withval}"
-
-fi
-
-if test "x${want_yywrap}" = "xyes"
-then :
-
-  for ac_prog in flex lex
+for ac_prog in flex lex
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -18708,12 +18694,6 @@ fi
 
 fi
 rm -f conftest.l $LEX_OUTPUT_ROOT.c
-
-fi
-
-else $as_nop
-
-
 
 fi
 if test "$LEX" = :; then
