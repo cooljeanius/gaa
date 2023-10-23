@@ -114,6 +114,10 @@ endif
 
 EXTRA_DIST += gaa.dvi version.texi
 
+diststuff: $(EXTRA_DIST)
+	ls
+.PHONY: diststuff
+
 check-local:
 	for myfile in $(EXTRA_DIST); do \
 	  if test -e $${myfile}; then \
@@ -128,15 +132,25 @@ check-local:
 	done
 
 clean-local:
+	echo "CLEANFILES are: \"$(CLEANFILES)\""; \
+	sleep 1; \
 	if test -d ../.git && test -x "`which git`"; then \
 	  for keepme in gaa.dvi gaa.html/index.html; do \
 	    if test ! -e $${dontclean}; then \
 	      if test -n "`git status -s $${keepme} 2>/dev/null | grep D`"; then \
 	        echo "$${keepme} appears to have been deleted; attempting to restore it..."; \
 	        git restore $${keepme}; \
+	      else \
+	        git status -s $${keepme} 2>/dev/null; \
 	      fi; \
+	    elif test ! -e $(srcdir)/$${dontclean}; then \
+	      mv -v $${dontclean} $(srcdir); \
+	    else \
+	      stat $${dontclean}; \
 	    fi; \
 	  done; \
+	else \
+	  echo "FIXME: come up with another way besides git to restore things"; \
 	fi
 
 distclean-local:
