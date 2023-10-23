@@ -20,3 +20,4 @@ doc/gaa.ps
 *.dSYM
 gaa-*.*.*/*
 .env.local
+sample/lib*.a

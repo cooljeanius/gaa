@@ -75,6 +75,11 @@ dnl# Checks for header files.
 AC_HEADER_STDBOOL
 AC_CHECK_HEADERS([stddef.h stdio.h])dnl
 
+if test "x${ac_cv_header_unistd_h}" = "x"; then
+  test -z "${ac_cv_header_unistd_h}"
+  AC_CHECK_HEADERS([unistd.h])
+fi
+
 dnl# Checks for typedefs, structures, and compiler characteristics.
 AC_C_BIGENDIAN
 AC_C_CONST

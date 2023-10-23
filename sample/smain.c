@@ -1,6 +1,19 @@
 /* main file corresponding to sample.gaa */
 #include <stdio.h>
-#include "sample_gaa.h"
+#ifdef GAA_WORKS
+# include "sample_gaa.h"
+#else
+struct gaainfo
+{
+    int n;
+    const char *file;
+    int verbose;
+    int size;
+    const char **input;
+};
+typedef struct gaainfo gaainfo;
+int gaa(int argc, char **argv, gaainfo *info);
+#endif /* GAA_WORKS */
 
 int main(int argc, char **argv)
 {

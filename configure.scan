@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.70])
+AC_PREREQ([2.71])
 AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
@@ -17,10 +17,6 @@ AC_PROG_MAKE_SET
 AC_PROG_RANLIB
 
 # Checks for libraries.
-# FIXME: Replace 'main' with a function in '-latex':
-AC_CHECK_LIB([atex], [main])
-# FIXME: Replace 'main' with a function in '-latex2html':
-AC_CHECK_LIB([atex2html], [main])
 # FIXME: Replace 'main' with a function in '-local_icons':
 AC_CHECK_LIB([ocal_icons], [main])
 
