@@ -127,6 +127,18 @@ check-local:
 	  fi; \
 	done
 
+clean-local:
+	if test -d ../.git && test -x "`which git`"; then \
+	  for keepme in gaa.dvi gaa.html/index.html; do \
+	    if test ! -e $${dontclean}; then \
+	      if test -n "`git status -s $${keepme} 2>/dev/null | grep D`"; then \
+	        echo "$${keepme} appears to have been deleted; attempting to restore it..."; \
+	        git restore $${keepme}; \
+	      fi; \
+	    fi; \
+	  done; \
+	fi
+
 distclean-local:
 	if test "x$(srcdir)" != "x$(builddir)"; then \
 	  for junkfile in tut.tex gaa.aux gaa.log ref.tex gaa.toc gaa.tex; do \

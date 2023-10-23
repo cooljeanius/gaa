@@ -657,7 +657,8 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-aminfo clean-generic clean-libtool mostlyclean-am
+clean-am: clean-aminfo clean-generic clean-libtool clean-local \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -f Makefile
@@ -819,10 +820,10 @@ uninstall-am: uninstall-dist_gaadocDATA uninstall-dvi-am \
 .MAKE: check-am install-am install-strip
 
 .PHONY: all all-am check check-am check-local clean clean-aminfo \
-	clean-generic clean-libtool cscopelist-am ctags-am dist-info \
-	distclean distclean-generic distclean-libtool distclean-local \
-	distdir dvi dvi-am html html-am info info-am install \
-	install-am install-data install-data-am \
+	clean-generic clean-libtool clean-local cscopelist-am ctags-am \
+	dist-info distclean distclean-generic distclean-libtool \
+	distclean-local distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am \
 	install-dist_gaadocDATA install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
@@ -949,6 +950,18 @@ check-local:
 	    echo "missing file $${myfile}!" >&2; exit 1; \
 	  fi; \
 	done
+
+clean-local:
+	if test -d ../.git && test -x "`which git`"; then \
+	  for keepme in gaa.dvi gaa.html/index.html; do \
+	    if test ! -e $${dontclean}; then \
+	      if test -n "`git status -s $${keepme} 2>/dev/null | grep D`"; then \
+	        echo "$${keepme} appears to have been deleted; attempting to restore it..."; \
+	        git restore $${keepme}; \
+	      fi; \
+	    fi; \
+	  done; \
+	fi
 
 distclean-local:
 	if test "x$(srcdir)" != "x$(builddir)"; then \
