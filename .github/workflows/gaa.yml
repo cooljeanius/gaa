@@ -16,7 +16,7 @@ jobs:
 #     # 'compiler' was not transformed because there is no suitable equivalent in GitHub Actions
     - run: sudo apt-get update
     - run: sudo apt-get install texinfo texlive-latex-base latex2html
-    - run: "./configure && make && make check && make distcheck"
+    - run: "./configure CC=${{ matrix.compiler }} && make && make check && make distcheck"
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v4.3.2
       with:
