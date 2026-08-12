@@ -66,12 +66,14 @@ jobs:
 
     - name: Dependencies
       run: sudo apt-get update && sudo apt-get install texlive latex2html
+      if: matrix.language == 'c-cpp'
   
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     - name: Autobuild
       uses: github/codeql-action/autobuild@v4.37.6
 
     - run: make check
+      if: matrix.language == 'c-cpp'
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4.37.6
