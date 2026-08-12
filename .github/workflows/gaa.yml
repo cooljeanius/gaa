@@ -1,3 +1,4 @@
+---
 name: cooljeanius/gaa
 on:
   push:
@@ -14,8 +15,6 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v7
-#     # 'Transformers::TravisCI::Scripts::Dependencies' dependencies are currently unsupported
-#     # 'compiler' was not transformed because there is no suitable equivalent in GitHub Actions
     - run: sudo apt-get update
     - run: sudo apt-get install texinfo texlive-latex-base latex2html
     - run: "./configure CC=${{ matrix.compiler }} && make && make check && make distcheck"
