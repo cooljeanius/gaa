@@ -28,16 +28,16 @@ AC_EXEEXT
 dnl# Checks for programs.
 AC_PROG_CPP
 AC_PROG_CXX
-AC_PROG_GCC_TRADITIONAL
+AC_PROG_AR
 AC_PROG_INSTALL
 AC_PROG_LN_S
 LT_INIT
 if test "x${RANLIB}" = "x"; then
-	test -z "${RANLIB}"
-	AC_PROG_RANLIB
+  test -z "${RANLIB}" || unset RANLIB
+  AC_PROG_RANLIB
 else
-	test ! -z "${RANLIB}" && export RANLIB
-	AC_SUBST([RANLIB])
+  test -n "${RANLIB}" && export RANLIB
+  AC_SUBST([RANLIB])
 fi
 
 dnl# Documentation tools.
@@ -76,7 +76,7 @@ AC_HEADER_STDBOOL
 AC_CHECK_HEADERS([stddef.h stdio.h])dnl
 
 if test "x${ac_cv_header_unistd_h}" = "x"; then
-  test -z "${ac_cv_header_unistd_h}"
+  test -z "${ac_cv_header_unistd_h}" || unset ac_cv_header_unistd_h
   AC_CHECK_HEADERS([unistd.h])
 fi
 
